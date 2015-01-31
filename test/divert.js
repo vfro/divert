@@ -21,7 +21,7 @@ describe("divert basic flow", function() {
       });
    });
 
-   it("yield construction trows an exception in case of errors", function(done) {
+   it("yield construction throws an exception in case of errors", function(done) {
       divert(function* (sync) {
          try {
             yield fs.readFile("test/resources/unknown.txt", "utf8", sync);
@@ -31,6 +31,34 @@ describe("divert basic flow", function() {
             assert.equal("ENOENT", e.code, "error contains valid code");
             done();
          }
+      });
+   });
+
+   it("yield construction returns a value in case of single-parameter callback convention", function(done) {
+      var someAsyncFunction = function(x) {
+         setImmediate(function() {
+            x("one");
+         });
+      }
+
+      divert(function* (sync) {
+         var text = yield someAsyncFunction(sync);
+         assert.equal("one", text, "yield returns single value of callback");
+         done();
+      });
+   });
+
+   it("yield construction returns array of arguments in case of unknown convention", function(done) {
+      var someAsyncFunction = function(x) {
+         setImmediate(function() {
+            x("one", "two");
+         });
+      }
+
+      divert(function* (sync) {
+         var array = yield someAsyncFunction(sync);
+         assert.deepEqual(["one", "two"], array, "yield returns array of arguments");
+         done();
       });
    });
 });
