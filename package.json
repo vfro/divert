@@ -1,0 +1,42 @@
+{
+   "name": "divert",
+   "version": "0.0.1",
+   "description": "yield to callback transformer",
+   "author": {
+      "name": "Volodymyr Frolov",
+      "email": "frolov.volodymyr@gmail.com",
+      "url": "https://github.com/vfro"
+   },
+   "keywords": [
+     "async",
+     "await",
+     "callback",
+     "control",
+     "deferred",
+     "divert",
+     "flow",
+     "fluent",
+     "generator",
+     "promise",
+     "resume",
+     "suspend",
+     "yield"
+   ],
+   "main": "lib/divert.js",
+   "repository": {
+     "type": "git",
+     "url": "git://github.com/vfro/divert.git"
+   },
+   "license": {
+     "type": "MIT",
+     "url": "http://github.com/vfro/divert/raw/master/LICENSE"
+   },
+   "engines": {
+     "node": ">=0.11.3",
+     "iojs": ">=1.0.0"
+   },
+   "dependencies": {},
+   "devDependencies": {
+      "mocha": ">=2.1.0"
+   }
+}
