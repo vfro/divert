@@ -1,6 +1,6 @@
 {
    "name": "divert",
-   "version": "0.0.1",
+   "version": "0.0.2",
    "description": "yield to callback transformer",
    "author": {
       "name": "Volodymyr Frolov",
