@@ -3,7 +3,6 @@ var fs = require("fs");
 var divert = require("../");
 
 describe("divert basic flow", function() {
-
    it("divert invokes callback with sync parameter", function(done) {
       divert(function* (sync) {
          assert.ok(sync);
@@ -126,6 +125,45 @@ describe("divert sub-flow must reuse same sync parameter to execute sequentially
          var value = yield doAsync(sync);
          assert.ok(value === 2 || value === 3, "after async sub-divert");
          done();
+      });
+   });
+});
+
+describe("parallel diverts flow", function() {
+   it("several diverts may be performed asynchronously", function(done) {
+      var i = 0;
+      var doAsync = function(x) {
+         setImmediate(function() {
+            x(++i);
+
+            if (i == 4) {
+               done();
+            }
+         });
+      }
+
+      divert(function* (sync) {
+         var value = yield doAsync(sync);
+         assert.ok(value < 6, "1.1) async divert");
+
+         var value = yield doAsync(sync);
+         assert.ok(value < 7, "1.2) async divert");
+      });
+
+      divert(function* (sync) {
+         var value = yield doAsync(sync);
+         assert.ok(value < 6, "2.1) async divert");
+
+         var value = yield doAsync(sync);
+         assert.ok(value < 7, "2.2) async divert");
+      });
+
+      divert(function* (sync) {
+         var value = yield doAsync(sync);
+         assert.ok(value < 6, "2.1) async divert");
+
+         var value = yield doAsync(sync);
+         assert.ok(value < 7, "2.2) async divert");
       });
    });
 });
