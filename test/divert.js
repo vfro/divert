@@ -25,7 +25,7 @@ describe("divert basic flow", function() {
       divert(function* (sync) {
          try {
             yield fs.readFile("test/resources/unknown.txt", "utf8", sync);
-            assert.fail("yeild construnction must throw in case of errors");
+            assert.fail("yield construction must throw in case of errors");
          } catch(e) {
             assert.ok(e instanceof Error, "yield construction throws");
             assert.equal("ENOENT", e.code, "error contains valid code");
@@ -34,31 +34,111 @@ describe("divert basic flow", function() {
       });
    });
 
+   it("yield construction returns undefined in case if callback is called without parameters", function(done) {
+      var doAsync = function(x) {
+         setImmediate(function() {
+            x();
+         });
+      }
+
+      divert(function* (sync) {
+         var none = yield doAsync(sync);
+         assert.equal(undefined, none, "yield construction returns undefined");
+         done();
+      });
+   });
+
    it("yield construction returns a value in case of single-parameter callback convention", function(done) {
-      var someAsyncFunction = function(x) {
+      var doAsync = function(x) {
          setImmediate(function() {
             x("one");
          });
       }
 
       divert(function* (sync) {
-         var text = yield someAsyncFunction(sync);
+         var text = yield doAsync(sync);
          assert.equal("one", text, "yield returns single value of callback");
          done();
       });
    });
 
    it("yield construction returns array of arguments in case of unknown convention", function(done) {
-      var someAsyncFunction = function(x) {
+      var doAsync = function(x) {
          setImmediate(function() {
             x("one", "two");
          });
       }
 
       divert(function* (sync) {
-         var array = yield someAsyncFunction(sync);
+         var array = yield doAsync(sync);
          assert.deepEqual(["one", "two"], array, "yield returns array of arguments");
          done();
+      });
+   });
+});
+
+describe("divert sub-flow must reuse same sync parameter to execute sequentially", function() {
+   it("sequential sub-divert", function(done) {
+      var i = 0;
+      var doAsync = function(x) {
+         setImmediate(function() {
+            x(++i);
+         });
+      }
+
+      divert(function* (sync) {
+         var value = yield doAsync(sync);
+         assert.equal(1, value, "before sub-divert");
+
+         yield divert(function* (newSync) {
+            assert.ok(newSync === sync, "sync instance is the same");
+            var value = yield doAsync(sync);
+            assert.equal(2, value, "a call inside sub-divert");
+
+            var value = yield doAsync(sync);
+            assert.equal(3, value, "verify that sub-divert continues");
+         }, sync);
+
+         var value = yield doAsync(sync);
+         assert.equal(4, value, "after sub-divert");
+         done();
+      });
+   });
+
+   it("async sub-divert", function(done) {
+      var i = 0;
+      var doAsync = function(x) {
+         setImmediate(function() {
+            x(++i);
+         });
+      }
+
+      divert(function* (sync) {
+         var value = yield doAsync(sync);
+         assert.equal(1, value, "before async sub-divert");
+
+         divert(function* (newSync) {
+            assert.ok(newSync != sync, "new instance of sync in async sub-divert");
+            var value = yield doAsync(newSync);
+            assert.ok(value === 2 || value === 3, "async call inside sub-divert");
+         });
+
+         var value = yield doAsync(sync);
+         assert.ok(value === 2 || value === 3, "after async sub-divert");
+         done();
+      });
+   });
+});
+
+describe("divert error handler is customizable", function() {
+   it("customize divert error handler", function(done) {
+      divert.errorHandler(function(e) {
+         assert.equal("custom error", e, "exception from divert");
+         done();
+      });
+
+      divert(function* (sync) {
+         throw "custom error";
       });
    });
 });
