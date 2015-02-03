@@ -24,14 +24,14 @@ $ npm install divert
 ## API
 
 `require('divert')` returns a function with two parameters:
-* generator: must be a generator-function `function*(sync) { ... }`
+* `generator`: must be a generator-function `function*(sync) { ... }`
     * generator function is invoked asynchronously.
     * generator function accepts `sync` parameter, which must be passed as a callback to all yielded asynchronous calls.
-    * yield construction evaluates to the value, which is passed to `sync` callback by asynchronous function.
-    * yield construction may throw an exception in case if asynchronous function produces an error.
-* callback: Optional Node-style callback which is called when `divert` is done.
+    * `yield` construction evaluates to the value, which is passed to `sync` callback by asynchronous function.
+    * 1yield` construction may throw an exception in case if asynchronous function produces an error.
+* `callback`: Optional Node-style callback which is called when `divert` is done.
 
-```
+```javascript
 var divert = require('divert');
 var fs = require('fs');
 
@@ -64,7 +64,7 @@ Divert supports the following notations, passed to `sync` callback:
 
 Consider the following [phantomjs-node](https://github.com/sgentle/phantomjs-node)-based code, based on callbacks:
 
-```
+```javascript
 var phantom = require('phantom');
 
 phantom.create(function(ph) {
@@ -84,7 +84,7 @@ phantom.create(function(ph) {
 
 Compare it with the same code flattened by divert:
 
-```
+```javascript
 var phantom = require('phantom');
 var divert = require('divert');
 
