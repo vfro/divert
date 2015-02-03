@@ -88,4 +88,16 @@ describe('divert basic flow', function() {
          done();
       });
    });
+
+   it('invocation of divert generator is asynchronous', function(done) {
+      var async = true;
+      var checked = false;
+      divert(function* (sync) {
+         async = false;
+         assert.ok(checked, 'it is checked now that generator is asynchronous');
+         done();
+      });
+      assert.ok(async, 'generator is not invoked yet');
+      checked = true;
+   });
 });

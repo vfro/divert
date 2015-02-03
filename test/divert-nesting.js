@@ -11,4 +11,21 @@ describe('divert can be nested', function() {
          done();
       });
    });
+
+   it('exception can be thrown through several levels of divert', function(done) {
+      divert(function*(sync) {
+         try {
+            yield divert(function*(sync) {
+               yield divert(function*(sync) {
+                  throw Error('error message');
+               }, sync);
+            }, sync);
+            assert.fail('exception must be thrown by yield construction');
+         }
+         catch(e) {
+            assert.equal('error message', e.message, 'exception is thrown through several levels of divert');
+            done();
+         }
+      });
+   });
 });
