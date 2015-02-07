@@ -7,7 +7,7 @@ Divert is a [generator-based](http://wiki.ecmascript.org/doku.php?id=harmony:gen
 Divert is minimalistic and stunningly simple. It doesn't support [promises](http://wiki.ecmascript.org/doku.php?id=strawman:promises) and [thunks](https://github.com/tj/node-thunkify)
 which makes it a zero-dependency module. Nevertheless divert is enough for vast majority of cases. Divert-based code is compact, exceptions-enabled and intuitive.
 
-**Note:** Generators are currently supported only by unstable Node release (v0.11.x) with `--harmony-generators` or `--harmony` flag in V8:
+**Note:** Generators are supported by stable Node release starting from v0.12.x with `--harmony-generators` or `--harmony` flag in V8:
 
 ```
 $ node --harmony-generators script.js
