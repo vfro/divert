@@ -28,7 +28,7 @@ $ npm install divert
     * generator function is invoked asynchronously.
     * generator function accepts `sync` parameter, which must be passed as a callback to all yielded asynchronous calls.
     * `yield` construction evaluates to the value, which is passed to `sync` callback by asynchronous function.
-    * 1yield` construction may throw an exception in case if asynchronous function produces an error.
+    * `yield` construction may throw an exception in case if asynchronous function produces an error.
 * `callback`: Optional Node-style callback which is called when `divert` is done.
 
 ```javascript
