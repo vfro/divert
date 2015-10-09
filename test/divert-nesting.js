@@ -6,6 +6,18 @@ describe('divert can be nested', function() {
       divert(function*(sync) {
          var result = yield divert(function*() {
                return true;
+            }, function(err, result) {
+               assert.ifError(err);
+               assert.ok(result, 'result of nested divert can be obtained through callback');
+               done();
+            });
+      });
+   });
+
+   it('divert accepts sync as a second parameter', function(done) {
+      divert(function*(sync) {
+         var result = yield divert(function*() {
+               return true;
             }, sync);
          assert.ok(result, 'result of nested divert can be obtained through callback');
          done();
