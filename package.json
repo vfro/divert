@@ -1,6 +1,6 @@
 {
    "name": "divert",
-   "version": "1.0.3",
+   "version": "1.0.4",
    "description": "yield to callback transformer; flattener of asynchronous code",
    "author": {
       "name": "Volodymyr Frolov",

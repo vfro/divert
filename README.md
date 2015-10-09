@@ -13,6 +13,8 @@ which makes it a zero-dependency module. Nevertheless divert is enough for vast 
 $ node --harmony-generators script.js
 ```
 
+Starting from Node 4.0 generators are supported without additional flags.
+
 Generators are also supported by [io.js](https://iojs.org/) running without additional flags and [Babel](https://babeljs.io).
 
 ## installation

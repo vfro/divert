@@ -89,6 +89,34 @@ describe('divert basic flow', function() {
       });
    });
 
+   it('yield construction works in case if error parameter is undefined in node-style convension', function(done) {
+      var doAsync = function(x) {
+         setImmediate(function() {
+            x(undefined, 'one');
+         });
+      }
+
+      divert(function* (sync) {
+         var one = yield doAsync(sync);
+         assert.equal('one', one, 'yield returns single value');
+         done();
+      });
+   });
+
+   it('yield construction returns array of arguments in case if error parameter is undefined in node-style convension', function(done) {
+      var doAsync = function(x) {
+         setImmediate(function() {
+            x(undefined, 'one', 'two');
+         });
+      }
+
+      divert(function* (sync) {
+         var array = yield doAsync(sync);
+         assert.deepEqual(['one', 'two'], array, 'yield returns array of arguments');
+         done();
+      });
+   });
+
    it('invocation of divert generator is asynchronous', function(done) {
       var async = true;
       var checked = false;
