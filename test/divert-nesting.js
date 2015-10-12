@@ -24,6 +24,23 @@ describe('divert can be nested', function() {
       });
    });
 
+   it('divert invokes a callback only for the last time', function(done) {
+      var doAsync = function(x) {
+         setImmediate(function() {
+            x(null, false);
+         });
+      }
+
+      divert(function*(sync) {
+         var result = yield divert(function*(sync) {
+               yield doAsync(sync);
+               return true;
+            }, sync);
+         assert.ok(result, 'only the last returned result is obtained through callback');
+         done();
+      });
+   });
+
    it('exception can be thrown through several levels of divert', function(done) {
       divert(function*(sync) {
          try {
