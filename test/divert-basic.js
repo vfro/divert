@@ -14,7 +14,7 @@ describe('divert basic flow', function() {
       divert(function* (sync) {
          var text = (yield fs.readFile('test/resources/one.txt', 'utf8', sync)).toString();
          assert.equal('1', text);
-         var text = (yield fs.readFile('test/resources/two.txt', 'utf8', sync)).toString();
+         text = (yield fs.readFile('test/resources/two.txt', 'utf8', sync)).toString();
          assert.equal('2', text);
          done();
       });
@@ -127,5 +127,20 @@ describe('divert basic flow', function() {
       });
       assert.ok(async, 'generator is not invoked yet');
       checked = true;
+   });
+
+   it('setImmediate can be used in divert function with sync argument to return control flow', function(done) {
+      divert(function* (sync) {
+         yield setImmediate(sync);
+         done();
+      });
+   });
+
+   it('additional divert parameters are passed to generator', function(done) {
+      divert(function* (sync, one, two) {
+         assert.equal('one', one, 'firts additional divert\'s parameter of type string is passed to generator');
+         assert.equal(2, two, 'second additional divert\'s parameter of type string is passed to generator');
+         done();
+      }, null, 'one', 2);
    });
 });

@@ -28,10 +28,11 @@ $ npm install divert
 `require('divert')` returns a function with two parameters:
 * `generator`: must be a generator-function `function*(sync) { ... }`
     * generator function is invoked asynchronously.
-    * generator function accepts `sync` parameter, which must be passed as a callback to all yielded asynchronous calls.
+    * generator function accepts `sync` as a first parameter, which must be passed as a callback to all `yield`ed asynchronous calls.
     * `yield` construction evaluates to the value, which is passed to `sync` callback by asynchronous function.
     * `yield` construction may throw an exception in case if asynchronous function produces an error.
 * `callback`: Optional Node-style callback which is called when `divert` is done.
+* ... additional parameters: Optional additional parameters are passed as arguments to generation after `sync`.
 
 ```javascript
 var divert = require('divert');
@@ -61,6 +62,21 @@ Divert supports the following notations, passed to `sync` callback:
 * Raw:
     * `yield` returns a value directly, in case if single parameter is not an instance of `Error`.
     * `yield` returns an array of values, in case if multiple parameters are passed and first parameter is not an `Error`.
+
+## for-each loop
+
+Divert block cannot be nested directly into for-each method of [lodash](https://lodash.com/), [Underscore.js](http://underscorejs.org/),
+[async](https://github.com/caolan/async) or similar libraries. In order to `yield` asynchronous for-each loop, `sync` callback must be invoked only once
+and only after each element is processed. Most of the libraries doesn't allow that.
+
+In that case divert.each function can be used to invoke nested generator for element in a regular or array-like object. It accepts the following arguments:
+* `collection`: regular or array-like object.
+* `generator`: must be a generator-function with the following parameters:
+   * `sync`: callback to `yield` internal asynchronous calls properly.
+   * `value`: Optional parameter which contains an iterated value.
+   * `index`: Optional parameter which contains an index of the iterated value.
+   * `collection`: Optional parameter which contains the original collection.
+* `callback`: Optional Node-style callback which is called when `divert.each` is done. Can be `sync` parameter in case if `divert.each` is `yield`ed from parent divert block.
 
 ## example
 
