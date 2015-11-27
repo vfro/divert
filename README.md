@@ -125,9 +125,9 @@ divert(function* (sync) {
     * suspend requires [promise](https://github.com/then/promise) as a dependency.
     * suspend doesn't treat single-parameter callback notation properly. In the example with phantomjs-node above, suspend resumeRaw callback will return single parameter as an array with one element.
 * [Q](https://github.com/kriskowal/q): Q supports yield-based asynchronous control flow, with one significant flaw though.
-    * Exceptions aren't thrown from yield construction, but `fail()` callback is called instead in case of failure. 
+    * Exceptions aren't thrown from `yield` construction, but `fail()` callback is called instead in case of failure. 
 * [co](https://github.com/tj/co):
-    * Unlike co, divert can yield functions which are not thunkified or promisified.
+    * Unlike co, divert can `yield` functions which are not thunkified or promisified.
 
 ## License
 
