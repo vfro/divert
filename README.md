@@ -33,7 +33,7 @@ $ npm install divert
     * `yield` construction may throw an exception in case if asynchronous function produces an error.
 * `callback`: Optional Node-style callback which is called when `divert` is done.
 * ... additional parameters: Optional additional parameters are passed as arguments to generation after `sync`.
-* return: A `Promise` which either resolves to `return` value of the generator in normal flow or rejects with an `Error` if the `Error` is thrown by generator. 
+* `return`: A `Promise` which either resolves to `return` value of the generator in normal flow or rejects with an `Error` if the `Error` is thrown by generator. 
 
 ```javascript
 var divert = require('divert');
