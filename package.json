@@ -1,6 +1,6 @@
 {
    "name": "divert",
-   "version": "2.0.1",
+   "version": "2.0.2",
    "description": "yield to callback transformer; flattener of asynchronous code",
    "license": "MIT",
    "homepage": "https://github.com/vfro/divert",

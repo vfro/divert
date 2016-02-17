@@ -4,16 +4,16 @@ Divert is a [generator-based](http://wiki.ecmascript.org/doku.php?id=harmony:gen
 
 ## motivation
 
-Divert is minimalistic and stunningly simple. It doesn't support [promises](http://wiki.ecmascript.org/doku.php?id=strawman:promises) and [thunks](https://github.com/tj/node-thunkify)
-which makes it a zero-dependency module. Nevertheless divert is enough for vast majority of cases. Divert-based code is compact, exceptions-enabled and intuitive.
+Divert is minimalistic and stunningly simple, it is a zero-dependency module. Nevertheless divert is enough for vast majority of cases. Divert-based code is compact, exceptions-enabled and intuitive.
+Divert is also callback and Promise friendly.
 
-**Note:** Generators are supported by stable Node release starting from v0.12.x with `--harmony-generators` or `--harmony` flag in V8:
+**Note:** Generators are supported by Node.js starting from v0.12.x with `--harmony-generators` or `--harmony` flag in V8:
 
 ```
 $ node --harmony-generators script.js
 ```
 
-Starting from Node 4.0 generators are supported without additional flags.
+Starting from Node.js 4.0 generators are supported without additional flags.
 
 Generators are also supported by [io.js](https://iojs.org/) running without additional flags and [Babel](https://babeljs.io).
 
@@ -33,6 +33,7 @@ $ npm install divert
     * `yield` construction may throw an exception in case if asynchronous function produces an error.
 * `callback`: Optional Node-style callback which is called when `divert` is done.
 * ... additional parameters: Optional additional parameters are passed as arguments to generation after `sync`.
+* return: A `Promise` which either resolves to `return` value of the generator in normal flow or rejects with an `Error` if the `Error` is thrown by generator. 
 
 ```javascript
 var divert = require('divert');
@@ -55,7 +56,7 @@ divert(function* (sync) {
 
 Divert supports the following notations, passed to `sync` callback:
 
-* Node-style:
+* Node.js-style:
     * `yield` throw an exception if first parameter of `sync` is an instance of `Error`.
     * `yield` returns a value, in case if first parameter is `null` and second parameter is a value.
     * `yield` returns an array of values, if first parameter is `null` and more than one parameter is passed after that.
@@ -76,7 +77,7 @@ In that case divert.each function can be used to invoke nested generator for ele
    * `value`: Optional parameter which contains an iterated value.
    * `index`: Optional parameter which contains an index of the iterated value.
    * `collection`: Optional parameter which contains the original collection.
-* `callback`: Optional Node-style callback which is called when `divert.each` is done. Can be `sync` parameter in case if `divert.each` is `yield`ed from parent divert block.
+* `callback`: Optional Node.js-style callback which is called when `divert.each` is done. Can be `sync` parameter in case if `divert.each` is `yield`ed from parent divert block.
 
 ## example
 
@@ -122,7 +123,6 @@ divert(function* (sync) {
 ## divert compared to other modules
 
 * [suspend](https://github.com/jmar777/suspend):  divert is very similar to suspend in many aspects, but still there are two differences.
-    * suspend requires [promise](https://github.com/then/promise) as a dependency.
     * suspend doesn't treat single-parameter callback notation properly. In the example with phantomjs-node above, suspend resumeRaw callback will return single parameter as an array with one element.
 * [Q](https://github.com/kriskowal/q): Q supports yield-based asynchronous control flow, with one significant flaw though.
     * Exceptions aren't thrown from `yield` construction, but `fail()` callback is called instead in case of failure. 
