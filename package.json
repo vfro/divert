@@ -25,6 +25,9 @@
      "yield"
    ],
    "main": "lib/divert.js",
+   "scripts": {
+      "test": "mocha"
+   },
    "repository": {
      "type": "git",
      "url": "git://github.com/vfro/divert.git"
