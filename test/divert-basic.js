@@ -2,15 +2,15 @@ const assert = require('assert');
 const fs = require('fs');
 const divert = require('../');
 
-describe('divert basic flow', function() {
-   it('divert invokes callback with sync parameter', function(done) {
+describe('divert basic flow', () => {
+   it('divert invokes callback with sync parameter', (done) => {
       divert(function* (sync) {
          assert.ok(sync);
          done();
       });
    });
 
-   it('sync parameter must be used as a callback function in all async calls', function(done) {
+   it('sync parameter must be used as a callback function in all async calls', (done) => {
       divert(function* (sync) {
          let text = (yield fs.readFile('test/resources/one.txt', 'utf8', sync)).toString();
          assert.equal('1', text);
@@ -20,7 +20,7 @@ describe('divert basic flow', function() {
       });
    });
 
-   it('yield construction throws an exception in case of errors', function(done) {
+   it('yield construction throws an exception in case of errors', (done) => {
       divert(function* (sync) {
          try {
             yield fs.readFile('test/resources/unknown.txt', 'utf8', sync);
@@ -33,9 +33,9 @@ describe('divert basic flow', function() {
       });
    });
 
-   it('yield construction returns undefined in case if callback is called without parameters', function(done) {
-      const doAsync = function(x) {
-         setImmediate(function() {
+   it('yield construction returns undefined in case if callback is called without parameters', (done) => {
+      const doAsync = (x) => {
+         setImmediate(() => {
             x();
          });
       }
@@ -47,9 +47,9 @@ describe('divert basic flow', function() {
       });
    });
 
-   it('yield construction returns a value in case of single parameter callback convention', function(done) {
-      const doAsync = function(x) {
-         setImmediate(function() {
+   it('yield construction returns a value in case of single parameter callback convention', (done) => {
+      const doAsync = (x) => {
+         setImmediate(() => {
             x('one');
          });
       }
@@ -61,9 +61,9 @@ describe('divert basic flow', function() {
       });
    });
 
-   it('yield construction returns array of arguments in case of multiple parameters callback convention', function(done) {
-      const doAsync = function(x) {
-         setImmediate(function() {
+   it('yield construction returns array of arguments in case of multiple parameters callback convention', (done) => {
+      const doAsync = (x) => {
+         setImmediate(() => {
             x(null, 'one', 'two');
          });
       }
@@ -75,9 +75,9 @@ describe('divert basic flow', function() {
       });
    });
 
-   it('yield construction returns array of arguments in case of unknown convention', function(done) {
-      const doAsync = function(x) {
-         setImmediate(function() {
+   it('yield construction returns array of arguments in case of unknown convention', (done) => {
+      const doAsync = (x) => {
+         setImmediate(() => {
             x('one', 'two');
          });
       }
@@ -89,9 +89,9 @@ describe('divert basic flow', function() {
       });
    });
 
-   it('yield construction works in case if error parameter is undefined in node-style convension', function(done) {
-      const doAsync = function(x) {
-         setImmediate(function() {
+   it('yield construction works in case if error parameter is undefined in node-style convension', (done) => {
+      const doAsync = (x) => {
+         setImmediate(() => {
             x(undefined, 'one');
          });
       }
@@ -103,9 +103,9 @@ describe('divert basic flow', function() {
       });
    });
 
-   it('yield construction returns array of arguments in case if error parameter is undefined in node-style convension', function(done) {
-      const doAsync = function(x) {
-         setImmediate(function() {
+   it('yield construction returns array of arguments in case if error parameter is undefined in node-style convension', (done) => {
+      const doAsync = (x) => {
+         setImmediate(() => {
             x(undefined, 'one', 'two');
          });
       }
@@ -117,7 +117,7 @@ describe('divert basic flow', function() {
       });
    });
 
-   it('invocation of divert generator is asynchronous', function(done) {
+   it('invocation of divert generator is asynchronous', (done) => {
       let async = true;
       let checked = false;
       divert(function* (sync) {
@@ -129,14 +129,14 @@ describe('divert basic flow', function() {
       checked = true;
    });
 
-   it('setImmediate can be used in divert function with sync argument to return control flow', function(done) {
+   it('setImmediate can be used in divert function with sync argument to return control flow', (done) => {
       divert(function* (sync) {
          yield setImmediate(sync);
          done();
       });
    });
 
-   it('additional divert parameters are passed to generator', function(done) {
+   it('additional divert parameters are passed to generator', (done) => {
       divert(function* (sync, one, two) {
          assert.equal('one', one, 'firts additional divert\'s parameter of type string is passed to generator');
          assert.equal(2, two, 'second additional divert\'s parameter of type string is passed to generator');

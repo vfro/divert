@@ -2,8 +2,8 @@ const assert = require('assert');
 const fs = require('fs');
 const divert = require('../');
 
-describe('divert for-each flow', function() {
-   it('divert invokes callback for each element in an array', function(done) {
+describe('divert for-each flow', () => {
+   it('divert invokes callback for each element in an array', (done) => {
       const array = [0, 2, 4, 6, 8, 10];
       let checkCounter = 0;
 
@@ -23,7 +23,7 @@ describe('divert for-each flow', function() {
       });
    });
 
-   it('divert invokes callback for each element in an object', function(done) {
+   it('divert invokes callback for each element in an object', (done) => {
       const object = {
          first: 'one',
          second: 'two',
@@ -59,7 +59,7 @@ describe('divert for-each flow', function() {
       });
    });
 
-   it('generator can break for-each loop when it is called for an array', function(done) {
+   it('generator can break for-each loop when it is called for an array', (done) => {
       const array = [0, 2, 4, 6, 8, 10];
       let checkCounter = 0;
 
@@ -75,7 +75,7 @@ describe('divert for-each flow', function() {
       });
    });
 
-   it('generator can throw an exception when it is called for an array', function(done) {
+   it('generator can throw an exception when it is called for an array', (done) => {
       const array = [0, 2, 4, 6, 8, 10];
       let checkCounter = 0;
 
@@ -94,7 +94,7 @@ describe('divert for-each flow', function() {
       });
    });
 
-   it('generator can break for-each loop when it is called for an object', function(done) {
+   it('generator can break for-each loop when it is called for an object', (done) => {
       const object = {
          first: 'one',
          second: 'two',
@@ -114,7 +114,7 @@ describe('divert for-each flow', function() {
       });
    });
 
-   it('generator can throw an exception when it is called for an array', function(done) {
+   it('generator can throw an exception when it is called for an array', (done) => {
       const object = {
          first: 'one',
          second: 'two',

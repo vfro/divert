@@ -1,12 +1,12 @@
 const assert = require('assert');
 const divert = require('../');
 
-describe('divert can be nested', function() {
-   it('divert accepts node-style callback as a second parameter', function(done) {
-      divert(function*(sync) {
-         const result = yield divert(function*() {
+describe('divert can be nested', () => {
+   it('divert accepts node-style callback as a second parameter', (done) => {
+      divert(function* (sync) {
+         const result = yield divert(function* () {
                return true;
-            }, function(err, result) {
+            }, (err, result) => {
                assert.ifError(err);
                assert.ok(result, 'result of nested divert can be obtained through callback');
                done();
@@ -14,9 +14,9 @@ describe('divert can be nested', function() {
       });
    });
 
-   it('divert accepts sync as a second parameter', function(done) {
-      divert(function*(sync) {
-         const result = yield divert(function*() {
+   it('divert accepts sync as a second parameter', (done) => {
+      divert(function* (sync) {
+         const result = yield divert(function* ( ) {
                return true;
             }, sync);
          assert.ok(result, 'result of nested divert can be obtained through callback');
@@ -24,15 +24,15 @@ describe('divert can be nested', function() {
       });
    });
 
-   it('divert invokes a callback only for the last time', function(done) {
-      const doAsync = function(x) {
-         setImmediate(function() {
+   it('divert invokes a callback only for the last time', (done) => {
+      const doAsync = (x) => {
+         setImmediate(() => {
             x(null, false);
          });
       }
 
-      divert(function*(sync) {
-         const result = yield divert(function*(sync) {
+      divert(function* (sync) {
+         const result = yield divert(function* (sync) {
                yield doAsync(sync);
                return true;
             }, sync);
@@ -41,11 +41,11 @@ describe('divert can be nested', function() {
       });
    });
 
-   it('exception can be thrown through several levels of divert', function(done) {
-      divert(function*(sync) {
+   it('exception can be thrown through several levels of divert', (done) => {
+      divert(function* (sync) {
          try {
-            yield divert(function*(sync) {
-               yield divert(function*(sync) {
+            yield divert(function* (sync) {
+               yield divert(function* (sync) {
                   throw Error('error message');
                }, sync);
             }, sync);
