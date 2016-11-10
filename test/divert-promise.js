@@ -1,8 +1,8 @@
-var assert = require('assert');
-var divert = require('../');
+const assert = require('assert');
+const divert = require('../');
 
 describe('divert integrates with promises', function() {
-   var doAsync = function(x) {
+   const doAsync = function(x) {
       setImmediate(function() {
          x(undefined, 'async value');
       });
@@ -30,10 +30,10 @@ describe('divert integrates with promises', function() {
       });
    });
 
-   var array = ['one', 'two', 'three'];
+   const array = ['one', 'two', 'three'];
 
    it('divert for-each returns promise which resolves when loop is finished', function(done) {
-      var checkCounter = 0;
+      let checkCounter = 0;
 
       divert.each(array, function* (sync, value) {
          checkCounter++;
@@ -45,7 +45,7 @@ describe('divert integrates with promises', function() {
    });
 
    it('divert for-each returns promise which resolves when loop is interrupted', function(done) {
-      var checkCounter = 0;
+      let checkCounter = 0;
 
       divert.each(array, function* (sync, value) {
          checkCounter++;
@@ -60,7 +60,7 @@ describe('divert integrates with promises', function() {
    });
 
    it('divert for-each returns promise which rejects when exception is thrown', function(done) {
-      var checkCounter = 0;
+      let checkCounter = 0;
 
       divert.each(array, function* (sync, value) {
          checkCounter++;

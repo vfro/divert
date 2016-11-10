@@ -1,14 +1,14 @@
-var assert = require('assert');
-var fs = require('fs');
-var divert = require('../');
+const assert = require('assert');
+const fs = require('fs');
+const divert = require('../');
 
 describe('divert for-each flow', function() {
    it('divert invokes callback for each element in an array', function(done) {
-      var array = [0, 2, 4, 6, 8, 10];
-      var checkCounter = 0;
+      const array = [0, 2, 4, 6, 8, 10];
+      let checkCounter = 0;
 
       divert(function* (sync) {
-         var result = yield divert.each(array, function* (sync, value, index, collection) {
+         const result = yield divert.each(array, function* (sync, value, index, collection) {
             // for-each generator can yield values with using of sync callback
             yield setImmediate(sync);
 
@@ -24,15 +24,15 @@ describe('divert for-each flow', function() {
    });
 
    it('divert invokes callback for each element in an object', function(done) {
-      var object = {
+      const object = {
          first: 'one',
          second: 'two',
          third: 'three'
       };
-      var checkCounter = 0;
+      let checkCounter = 0;
 
       divert(function* (sync) {
-         var result = yield divert.each(object, function* (sync, value, index, collection) {
+         const result = yield divert.each(object, function* (sync, value, index, collection) {
             checkCounter++;
 
             // for-each generator can yield values with using of sync callback
@@ -60,11 +60,11 @@ describe('divert for-each flow', function() {
    });
 
    it('generator can break for-each loop when it is called for an array', function(done) {
-      var array = [0, 2, 4, 6, 8, 10];
-      var checkCounter = 0;
+      const array = [0, 2, 4, 6, 8, 10];
+      let checkCounter = 0;
 
       divert(function* (sync) {
-         var result = yield divert.each(array, function* (sync, value, index, collection) {
+         const result = yield divert.each(array, function* (sync, value, index, collection) {
             checkCounter++;
             return false;
          }, sync);
@@ -76,8 +76,8 @@ describe('divert for-each flow', function() {
    });
 
    it('generator can throw an exception when it is called for an array', function(done) {
-      var array = [0, 2, 4, 6, 8, 10];
-      var checkCounter = 0;
+      const array = [0, 2, 4, 6, 8, 10];
+      let checkCounter = 0;
 
       divert(function* (sync) {
          try {
@@ -95,15 +95,15 @@ describe('divert for-each flow', function() {
    });
 
    it('generator can break for-each loop when it is called for an object', function(done) {
-      var object = {
+      const object = {
          first: 'one',
          second: 'two',
          third: 'three'
       };
-      var checkCounter = 0;
+      let checkCounter = 0;
 
       divert(function* (sync) {
-         var result = yield divert.each(object, function* (sync, value, index, collection) {
+         const result = yield divert.each(object, function* (sync, value, index, collection) {
             checkCounter++;
             return false;
          }, sync);
@@ -115,12 +115,12 @@ describe('divert for-each flow', function() {
    });
 
    it('generator can throw an exception when it is called for an array', function(done) {
-      var object = {
+      const object = {
          first: 'one',
          second: 'two',
          third: 'three'
       };
-      var checkCounter = 0;
+      let checkCounter = 0;
 
       divert(function* (sync) {
          try {

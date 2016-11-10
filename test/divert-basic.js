@@ -1,6 +1,6 @@
-var assert = require('assert');
-var fs = require('fs');
-var divert = require('../');
+const assert = require('assert');
+const fs = require('fs');
+const divert = require('../');
 
 describe('divert basic flow', function() {
    it('divert invokes callback with sync parameter', function(done) {
@@ -12,7 +12,7 @@ describe('divert basic flow', function() {
 
    it('sync parameter must be used as a callback function in all async calls', function(done) {
       divert(function* (sync) {
-         var text = (yield fs.readFile('test/resources/one.txt', 'utf8', sync)).toString();
+         let text = (yield fs.readFile('test/resources/one.txt', 'utf8', sync)).toString();
          assert.equal('1', text);
          text = (yield fs.readFile('test/resources/two.txt', 'utf8', sync)).toString();
          assert.equal('2', text);
@@ -34,92 +34,92 @@ describe('divert basic flow', function() {
    });
 
    it('yield construction returns undefined in case if callback is called without parameters', function(done) {
-      var doAsync = function(x) {
+      const doAsync = function(x) {
          setImmediate(function() {
             x();
          });
       }
 
       divert(function* (sync) {
-         var none = yield doAsync(sync);
+         const none = yield doAsync(sync);
          assert.equal(undefined, none, 'yield construction returns undefined');
          done();
       });
    });
 
    it('yield construction returns a value in case of single parameter callback convention', function(done) {
-      var doAsync = function(x) {
+      const doAsync = function(x) {
          setImmediate(function() {
             x('one');
          });
       }
 
       divert(function* (sync) {
-         var text = yield doAsync(sync);
+         const text = yield doAsync(sync);
          assert.equal('one', text, 'yield returns single value of callback');
          done();
       });
    });
 
    it('yield construction returns array of arguments in case of multiple parameters callback convention', function(done) {
-      var doAsync = function(x) {
+      const doAsync = function(x) {
          setImmediate(function() {
             x(null, 'one', 'two');
          });
       }
 
       divert(function* (sync) {
-         var array = yield doAsync(sync);
+         const array = yield doAsync(sync);
          assert.deepEqual(['one', 'two'], array, 'yield returns array of arguments without nulls');
          done();
       });
    });
 
    it('yield construction returns array of arguments in case of unknown convention', function(done) {
-      var doAsync = function(x) {
+      const doAsync = function(x) {
          setImmediate(function() {
             x('one', 'two');
          });
       }
 
       divert(function* (sync) {
-         var array = yield doAsync(sync);
+         const array = yield doAsync(sync);
          assert.deepEqual(['one', 'two'], array, 'yield returns array of arguments');
          done();
       });
    });
 
    it('yield construction works in case if error parameter is undefined in node-style convension', function(done) {
-      var doAsync = function(x) {
+      const doAsync = function(x) {
          setImmediate(function() {
             x(undefined, 'one');
          });
       }
 
       divert(function* (sync) {
-         var one = yield doAsync(sync);
+         const one = yield doAsync(sync);
          assert.equal('one', one, 'yield returns single value');
          done();
       });
    });
 
    it('yield construction returns array of arguments in case if error parameter is undefined in node-style convension', function(done) {
-      var doAsync = function(x) {
+      const doAsync = function(x) {
          setImmediate(function() {
             x(undefined, 'one', 'two');
          });
       }
 
       divert(function* (sync) {
-         var array = yield doAsync(sync);
+         const array = yield doAsync(sync);
          assert.deepEqual(['one', 'two'], array, 'yield returns array of arguments');
          done();
       });
    });
 
    it('invocation of divert generator is asynchronous', function(done) {
-      var async = true;
-      var checked = false;
+      let async = true;
+      let checked = false;
       divert(function* (sync) {
          async = false;
          assert.ok(checked, 'it is checked now that generator is asynchronous');

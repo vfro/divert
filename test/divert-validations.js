@@ -1,5 +1,5 @@
-var assert = require('assert');
-var divert = require('../');
+const assert = require('assert');
+const divert = require('../');
 
 describe('divert parameters validation', function() {
    it('divert ensures that first parameter is a generator', function(done) {
