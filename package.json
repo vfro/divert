@@ -1,6 +1,6 @@
 {
    "name": "divert",
-   "version": "2.1.0",
+   "version": "2.1.1",
    "description": "yield to callback transformer; flattener of asynchronous code",
    "license": "MIT",
    "homepage": "https://github.com/vfro/divert",
@@ -33,11 +33,10 @@
      "url": "git://github.com/vfro/divert.git"
    },
    "engines": {
-     "node": ">=0.11.3",
-     "iojs": ">=1.0.0"
+     "node": ">=6.0.0"
    },
    "dependencies": {},
    "devDependencies": {
-      "mocha": ">=2.1.0"
+      "mocha": "*"
    }
 }
