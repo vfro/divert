@@ -57,7 +57,7 @@ divert(function* (sync) {
 Divert supports the following notations, passed to `sync` callback:
 
 * Node.js-style:
-    * `yield` throw an exception if first parameter of `sync` is an instance of `Error`.
+    * `yield` throws an exception if first parameter of `sync` is an instance of `Error`.
     * `yield` returns a value, in case if first parameter is `null` and second parameter is a value.
     * `yield` returns an array of values, if first parameter is `null` and more than one parameter is passed after that.
 * Raw:
@@ -127,6 +127,8 @@ Divert can also unpromisify a promise based function with using of `divert.await
 `divert.await` accepts the following arguments:
 
 * `promise`: a promise to deal with.
+    * `yield` returns a value the promise is resolved with.
+    * `yield` throws an exception promise is rejected with.
 * `callback`: Node.js-style callback, typically `sync` parameter of current generator.
 
 ```javascript
