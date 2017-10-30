@@ -128,7 +128,7 @@ Divert can also unpromisify a promise based function with using of `divert.await
 
 * `promise`: a promise to deal with.
     * `yield` returns a value the promise is resolved with.
-    * `yield` throws an exception promise is rejected with.
+    * `yield` throws an exception the promise is rejected with.
 * `callback`: Node.js-style callback, typically `sync` parameter of current generator.
 
 ```javascript
