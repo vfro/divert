@@ -122,7 +122,7 @@ divert(function* (sync) {
 
 ## unpromisify
 
-Divert could also unpromisify a promise based function with using of `divert.await` to handle promise based API and Node.js-style callbacks in the same way.
+Divert can also unpromisify a promise based function with using of `divert.await` to handle promise based API and Node.js-style callbacks in the same way.
 
 `divert.await` accepts the following arguments:
 
