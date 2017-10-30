@@ -1,5 +1,7 @@
 const assert = require('assert');
 const divert = require('../');
+const fs = require('fs');
+const util = require('util');
 
 describe('divert integrates with promises', () => {
    const doAsync = (x) => {
@@ -75,4 +77,38 @@ describe('divert integrates with promises', () => {
          done();
       });
    });
+
+   it('divert awaits for promise', (done) => {
+      divert(function* (sync) {
+         const resolved = new Promise((resolve, reject) => {
+            setImmediate(() => {
+               resolve('async resolve');
+            });
+         });
+         const resolvedValue = yield divert.await(resolved, sync);
+         assert.equal('async resolve', resolvedValue, 'yield awaits for promise to resolve and returns the resolved value');
+
+         const rejected = new Promise((resolve, reject) => {
+            setImmediate(() => {
+               reject(new Error('async reject'));
+            });
+         });
+
+         try {
+            yield divert.await(rejected, sync);
+         } catch(error) {
+            assert.equal('async reject', error.message, 'yield awaits for promise to reject and throws the rejection error');
+            done();
+         }
+      });
+   });
+
+   it('unpromisify example', (done) => {
+      const readFilePromisified = util.promisify(fs.readFile);
+      divert(function* (sync) {
+         const result = yield divert.await(readFilePromisified('test/resources/one.txt', 'utf8'), sync);
+         assert.equal('1', result, 'unpromisified value');
+         done();
+      });
+   })
 });

@@ -70,7 +70,7 @@ Divert block cannot be nested directly into for-each method of [lodash](https://
 [async](https://github.com/caolan/async) or similar libraries. In order to `yield` asynchronous for-each loop, `sync` callback must be invoked only once
 and only after each element is processed. Most of the libraries doesn't allow that.
 
-In that case divert.each function can be used to invoke nested generator for element in a regular or array-like object. It accepts the following arguments:
+In that case `divert.each` function can be used to invoke nested generator for element in a regular or array-like object. It accepts the following arguments:
 * `collection`: regular or array-like object.
 * `generator`: must be a generator-function with the following parameters:
    * `sync`: callback to `yield` internal asynchronous calls properly.
@@ -117,6 +117,29 @@ divert(function* (sync) {
       }, sync);
    console.log('Page title is: ' + title);
    return ph.exit(sync);
+});
+```
+
+## unpromisify
+
+Divert could also unpromisify a promise based function with using of `divert.await` to handle promise based API and Node.js-style callbacks in the same way.
+
+`divert.await` accepts the following arguments:
+
+* `promise`: a promise to deal with.
+* `callback`: Node.js-style callback, typically `sync` parameter of current generator.
+
+```javascript
+var divert = require('divert');
+var fs = require('fs');
+var util = require('util');
+
+var readFilePromisified = util.promisify(fs.readFile);
+
+divert(function* (sync) {
+   var hello = yield divert.await(readFilePromisified('./hello.txt', 'utf8'), sync);
+   var there = yield divert.await(readFilePromisified('./there.txt', 'utf8'), sync);
+   console.log("%s, %s!", hello, there);
 });
 ```
 
