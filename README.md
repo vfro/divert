@@ -19,11 +19,13 @@ Generators are also supported by [io.js](https://iojs.org/) running without addi
 
 ## installation
 
-![AWS CodeBuild](https://codebuild.us-east-1.amazonaws.com/badges?uuid=eyJlbmNyeXB0ZWREYXRhIjoiNWwxamNGenVqQXd1S2I3RDB6a0lvMDlpMk5ocDRoVVRtWUEwNC9HVERWaFM3OTQzZDBUbGIrOEcwdkZQUWpyNWVoNzNRU3NpZ01uQ3kxRjZjS3FqbHMwPSIsIml2UGFyYW1ldGVyU3BlYyI6Ikpzai9GRjcxdS81R283KzkiLCJtYXRlcmlhbFNldFNlcmlhbCI6MX0%3D&branch=master)
-
 ```
 $ npm install divert
 ```
+
+## health
+
+Unit tests status: ![AWS CodeBuild](https://codebuild.us-east-1.amazonaws.com/badges?uuid=eyJlbmNyeXB0ZWREYXRhIjoiNWwxamNGenVqQXd1S2I3RDB6a0lvMDlpMk5ocDRoVVRtWUEwNC9HVERWaFM3OTQzZDBUbGIrOEcwdkZQUWpyNWVoNzNRU3NpZ01uQ3kxRjZjS3FqbHMwPSIsIml2UGFyYW1ldGVyU3BlYyI6Ikpzai9GRjcxdS81R283KzkiLCJtYXRlcmlhbFNldFNlcmlhbCI6MX0%3D&branch=master)
 
 ## API
 
