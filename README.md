@@ -7,23 +7,17 @@ Divert is a [generator-based](http://wiki.ecmascript.org/doku.php?id=harmony:gen
 Divert is minimalistic and stunningly simple, it is a zero-dependency module. Nevertheless divert is enough for vast majority of cases. Divert-based code is compact, exceptions-enabled and intuitive.
 Divert is also callback and Promise friendly.
 
-**Note:** Generators are supported by Node.js starting from v0.12.x with `--harmony-generators` or `--harmony` flag in V8:
-
-```
-$ node --harmony-generators script.js
-```
-
-Starting from Node.js 4.0 generators are supported without additional flags.
-
-Generators are also supported by [io.js](https://iojs.org/) running without additional flags and [Babel](https://babeljs.io).
-
 ## installation
 
 ```
 $ npm install divert
 ```
 
-## health
+### requirements
+
+Divert requires several ES6 features (generators, arrows, promises and spread) which means that it works on **Node.js 6.x** and higher.
+
+### health
 
 Unit tests status: ![AWS CodeBuild](https://codebuild.us-east-1.amazonaws.com/badges?uuid=eyJlbmNyeXB0ZWREYXRhIjoiNWwxamNGenVqQXd1S2I3RDB6a0lvMDlpMk5ocDRoVVRtWUEwNC9HVERWaFM3OTQzZDBUbGIrOEcwdkZQUWpyNWVoNzNRU3NpZ01uQ3kxRjZjS3FqbHMwPSIsIml2UGFyYW1ldGVyU3BlYyI6Ikpzai9GRjcxdS81R283KzkiLCJtYXRlcmlhbFNldFNlcmlhbCI6MX0%3D&branch=master)
 
