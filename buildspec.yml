@@ -1,0 +1,9 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+      - npm install --save-dev
+  build:
+    commands:
+      - npm test
