@@ -7,3 +7,6 @@ phases:
   build:
     commands:
       - npm test
+  cache:
+    paths:
+      - 'node_modules/**/*'
