@@ -2,10 +2,7 @@ const assert = require('assert');
 const divert = require('../');
 const fs = require('fs');
 const util = require('util');
-
-if (!util.promisify) {
-   require('util.promisify').shim();
-}
+util.promisify = util.promisify || require('util.promisify').shim();
 
 describe('divert integrates with promises', () => {
    const doAsync = (x) => {
