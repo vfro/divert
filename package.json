@@ -10,33 +10,34 @@
       "url": "https://github.com/vfro"
    },
    "keywords": [
-     "async",
-     "await",
-     "callback",
-     "control",
-     "deferred",
-     "divert",
-     "flow",
-     "fluent",
-     "generator",
-     "promise",
-     "resume",
-     "suspend",
-     "yield"
+      "async",
+      "await",
+      "callback",
+      "control",
+      "deferred",
+      "divert",
+      "flow",
+      "fluent",
+      "generator",
+      "promise",
+      "resume",
+      "suspend",
+      "yield"
    ],
    "main": "lib/divert.js",
    "scripts": {
       "test": "mocha"
    },
    "repository": {
-     "type": "git",
-     "url": "git://github.com/vfro/divert.git"
+      "type": "git",
+      "url": "git://github.com/vfro/divert.git"
    },
    "engines": {
-     "node": ">=6.0.0"
+      "node": ">=6.0.0"
    },
    "dependencies": {},
    "devDependencies": {
-      "mocha": "*"
+      "mocha": "*",
+      "util.promisify": "^1.0.0"
    }
 }
