@@ -1,9 +1,9 @@
 ## disclaimer
 
 This project was created in pre-[async/await](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function) epoch. Today you should consider
-using `async/await` operators together with [util.promisify()](https://nodejs.org/api/util.html#util_util_promisify_original) instead of `divert`.
+using `async`/`await` operators together with [util.promisify()](https://nodejs.org/api/util.html#util_util_promisify_original) instead.
 
-The project remains fully supported though. Your legacy projects depending on `divert` are not in danger.
+The project remains fully supported though. Your legacy projects depending on divert are not in danger.
 
 # Divert
 
