@@ -1,11 +1,14 @@
+await for promises, yield to callbacks
+
+# Divert
+
 ## disclaimer
 
-This project was created in pre-[async/await](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function) epoch. Today you should consider
-using `async`/`await` operators together with [util.promisify()](https://nodejs.org/api/util.html#util_util_promisify_original) instead.
+This project was created in pre-[async/await](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function) epoch. Today you should always consider using `async`/`await` operators together with [util.promisify()](https://nodejs.org/api/util.html#util_util_promisify_original) instead.
 
 The project remains fully supported though. Your legacy projects depending on divert are not in danger.
 
-# Divert
+You can also use divert if promisification doesn't sound right to you.
 
 Divert is a [generator-based](http://wiki.ecmascript.org/doku.php?id=harmony:generators) flattener of asynchronous code.
 
@@ -125,9 +128,27 @@ divert(function* (sync) {
 });
 ```
 
+## async generators
+
+Generator function can be async meaning that you can use both `await` and `yield` in the same function depending whether you deal with promises or callbacks.
+
+```javascript
+var divert = require('divert');
+var fs = require('fs');
+var util = require('util');
+
+var readFilePromisified = util.promisify(fs.readFile);
+
+divert(async function* (sync) {
+   var hello = await readFilePromisified('./hello.txt', 'utf8');
+   var there = yield fs.readFile('./there.txt', 'utf8', sync);
+   console.log("%s, %s!", hello, there);
+});
+```
+
 ## unpromisify
 
-Divert can also unpromisify a promise based function with using of `divert.await` to handle promise based API and Node.js-style callbacks in the same way.
+Alternatively to `async` generators you can unpromisify a promise based function with using of `divert.await`.
 
 `divert.await` accepts the following arguments:
 
