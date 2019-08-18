@@ -23,10 +23,6 @@ Divert is also callback and Promise friendly.
 $ npm install divert
 ```
 
-### requirements
-
-Divert requires several ES6 features (generators, arrows, promises and spread) which means that it works on **Node.js 6.x** and higher.
-
 ### project health
 
 ![AWS CodeBuild](https://codebuild.us-east-1.amazonaws.com/badges?uuid=eyJlbmNyeXB0ZWREYXRhIjoiNWwxamNGenVqQXd1S2I3RDB6a0lvMDlpMk5ocDRoVVRtWUEwNC9HVERWaFM3OTQzZDBUbGIrOEcwdkZQUWpyNWVoNzNRU3NpZ01uQ3kxRjZjS3FqbHMwPSIsIml2UGFyYW1ldGVyU3BlYyI6Ikpzai9GRjcxdS81R283KzkiLCJtYXRlcmlhbFNldFNlcmlhbCI6MX0%3D&branch=master)
@@ -34,7 +30,7 @@ Divert requires several ES6 features (generators, arrows, promises and spread) w
 ## API
 
 `require('divert')` returns a function with two parameters:
-* `generator`: must be a generator-function `function*(sync) { ... }`
+* `generator`: must be a generator `function*(sync) { ... }` or async generator `async function*(sync) { ... }`
     * generator function is invoked asynchronously.
     * generator function accepts `sync` as a first parameter, which must be passed as a callback to all `yield`ed asynchronous calls.
     * `yield` construction evaluates to the value, which is passed to `sync` callback by asynchronous function.
