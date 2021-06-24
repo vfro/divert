@@ -13,9 +13,9 @@ describe('divert basic flow', () => {
    it('sync parameter must be used as a callback function in all async calls', (done) => {
       divert(function* (sync) {
          let text = (yield fs.readFile('test/resources/one.txt', 'utf8', sync)).toString();
-         assert.equal('1', text);
+         assert.strictEqual('1', text);
          text = (yield fs.readFile('test/resources/two.txt', 'utf8', sync)).toString();
-         assert.equal('2', text);
+         assert.strictEqual('2', text);
          done();
       });
    });
@@ -27,7 +27,7 @@ describe('divert basic flow', () => {
             assert.fail('yield construction must throw in case of errors');
          } catch(e) {
             assert.ok(e instanceof Error, 'yield construction throws');
-            assert.equal('ENOENT', e.code, 'error contains valid code');
+            assert.strictEqual('ENOENT', e.code, 'error contains valid code');
             done();
          }
       });
@@ -42,7 +42,7 @@ describe('divert basic flow', () => {
 
       divert(function* (sync) {
          const none = yield doAsync(sync);
-         assert.equal(undefined, none, 'yield construction returns undefined');
+         assert.strictEqual(undefined, none, 'yield construction returns undefined');
          done();
       });
    });
@@ -56,7 +56,7 @@ describe('divert basic flow', () => {
 
       divert(function* (sync) {
          const text = yield doAsync(sync);
-         assert.equal('one', text, 'yield returns single value of callback');
+         assert.strictEqual('one', text, 'yield returns single value of callback');
          done();
       });
    });
@@ -98,7 +98,7 @@ describe('divert basic flow', () => {
 
       divert(function* (sync) {
          const one = yield doAsync(sync);
-         assert.equal('one', one, 'yield returns single value');
+         assert.strictEqual('one', one, 'yield returns single value');
          done();
       });
    });
@@ -138,8 +138,8 @@ describe('divert basic flow', () => {
 
    it('additional divert parameters are passed to generator', (done) => {
       divert(function* (sync, one, two) {
-         assert.equal('one', one, 'firts additional divert\'s parameter of type string is passed to generator');
-         assert.equal(2, two, 'second additional divert\'s parameter of type string is passed to generator');
+         assert.strictEqual('one', one, 'firts additional divert\'s parameter of type string is passed to generator');
+         assert.strictEqual(2, two, 'second additional divert\'s parameter of type string is passed to generator');
          done();
       }, null, 'one', 2);
    });

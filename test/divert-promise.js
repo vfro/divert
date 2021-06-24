@@ -1,6 +1,6 @@
 const assert = require('assert');
 const divert = require('../');
-const fs = require('fs');
+const fsPromises = require('fs/promises');
 const util = require('util');
 util.promisify = util.promisify || require('util.promisify').shim();
 
@@ -16,7 +16,7 @@ describe('divert integrates with promises', () => {
          yield doAsync(sync);
          return 'value';
       }).then((result) => {
-         assert.equal('value', result, 'promise resolves to return value');
+         assert.strictEqual('value', result, 'promise resolves to return value');
          done();
       });
    });
@@ -28,7 +28,7 @@ describe('divert integrates with promises', () => {
       }).then(() => {
          assert.fail('divert promise is resolved instead been rejected');
       }).catch((err) => {
-         assert.equal('message', err.message, 'promise is rejected with correct error information');
+         assert.strictEqual('message', err.message, 'promise is rejected with correct error information');
          done();
       });
    });
@@ -41,8 +41,8 @@ describe('divert integrates with promises', () => {
       divert.each(array, function* (sync, value) {
          checkCounter++;
       }).then((result) => {
-         assert.equal(3, checkCounter, 'for-each callback is called proper number of times before promise is resolved');
-         assert.equal(true, result, 'promise resolves to true at the end of the loop');
+         assert.strictEqual(3, checkCounter, 'for-each callback is called proper number of times before promise is resolved');
+         assert.strictEqual(true, result, 'promise resolves to true at the end of the loop');
          done();
       });
    });
@@ -56,8 +56,8 @@ describe('divert integrates with promises', () => {
             return false;
          }
       }).then((result) => {
-         assert.equal(2, checkCounter, 'for-each callback is called proper number of times before promise is resolved');
-         assert.equal(false, result, 'promise resolves to false when loop is interrupted');
+         assert.strictEqual(2, checkCounter, 'for-each callback is called proper number of times before promise is resolved');
+         assert.strictEqual(false, result, 'promise resolves to false when loop is interrupted');
          done();
       });
    });
@@ -73,8 +73,8 @@ describe('divert integrates with promises', () => {
       }).then(() => {
          assert.fail('divert for-each promise is resolved instead been rejected');
       }).catch((err) => {
-         assert.equal(2, checkCounter, 'for-each callback is called proper number of times before promise is rejected');
-         assert.equal('message', err.message, 'promise is rejected with correct error information');
+         assert.strictEqual(2, checkCounter, 'for-each callback is called proper number of times before promise is rejected');
+         assert.strictEqual('message', err.message, 'promise is rejected with correct error information');
          done();
       });
    });
@@ -87,7 +87,7 @@ describe('divert integrates with promises', () => {
             });
          });
          const resolvedValue = yield divert.await(resolved, sync);
-         assert.equal('async resolve', resolvedValue, 'yield awaits for promise to resolve and returns the resolved value');
+         assert.strictEqual('async resolve', resolvedValue, 'yield awaits for promise to resolve and returns the resolved value');
 
          const rejected = new Promise((resolve, reject) => {
             setImmediate(() => {
@@ -98,17 +98,16 @@ describe('divert integrates with promises', () => {
          try {
             yield divert.await(rejected, sync);
          } catch(error) {
-            assert.equal('async reject', error.message, 'yield awaits for promise to reject and throws the rejection error');
+            assert.strictEqual('async reject', error.message, 'yield awaits for promise to reject and throws the rejection error');
             done();
          }
       });
    });
 
    it('unpromisify example', (done) => {
-      const readFilePromisified = util.promisify(fs.readFile);
       divert(function* (sync) {
-         const result = yield divert.await(readFilePromisified('test/resources/one.txt', 'utf8'), sync);
-         assert.equal('1', result, 'unpromisified value');
+         const result = yield divert.await(fsPromises.readFile('test/resources/one.txt', 'utf8'), sync);
+         assert.strictEqual('1', result, 'unpromisified value');
          done();
       });
    })

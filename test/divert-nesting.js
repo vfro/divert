@@ -52,7 +52,7 @@ describe('divert can be nested', () => {
             assert.fail('exception must be thrown by yield construction');
          }
          catch(e) {
-            assert.equal('error message', e.message, 'exception is thrown through several levels of divert');
+            assert.strictEqual('error message', e.message, 'exception is thrown through several levels of divert');
             done();
          }
       });
